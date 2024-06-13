@@ -1,0 +1,76 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,700');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+
+body {
+    background: #f5f7f8;
+}
+
+.form {
+    text-align: center;
+    position: relative;
+    margin: 0 auto;
+    margin-top: 30px;
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    height: 500px;
+    width: 390px;
+    border-radius: 20px;
+    background-color: #ffffff;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2), -5px -5px 10px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+ .form:hover {
+        transform: scale(1.04);
+        filter: contrast(1.2);
+    }
+
+.login-text {
+    margin: 0 auto;
+    padding-top: 42px;
+    padding-bottom: 33px;
+    text-align: center;
+    font-size: 45px;
+    font-family: 'Arial Rounded MT';
+    transition: color 0.3s ease;
+}
+
+  .login-text .fa-stack-1x {
+        font-size: 55px;
+        color: #ffffff;
+        font-weight: bolder;
+    }
+
+h1:hover {
+    color: #063dbf;
+}
+
+input {
+    width: 290px;
+    height: 72px;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 0 20px;
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1), inset -5px -5px 10px #fffb;
+}
+
+input{
+    border-radius: 20px;
+}
+button{
+    width: 200px;
+    height: 40px;
+}
+.user, .btn-primary {
+    margin-bottom: 25px;
+    margin-top: 25px;
+}
+
+i { 
+    font-size: 19px;
+    color: #428ae4;
+    margin-right: 10px;
+}
+

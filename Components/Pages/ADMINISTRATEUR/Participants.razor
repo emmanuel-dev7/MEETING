@@ -1,0 +1,154 @@
+﻿@page "/participant"
+@namespace MEETING.Components.Pages.ADMINISTRATEUR
+@using Microsoft.EntityFrameworkCore
+@using MEETING.lesClasses
+@using Data
+@inject ApplicationDbContext DbContext
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+     <Sidebar />
+
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <div id="content">
+
+                <Topbar />
+
+                <div class="container-fluid">
+
+                    <h1 clas ms="h3 mb-2 text-gray-800">Participants</h1>
+                    <p class="mb-4">Nombre des Participants : @participants.Count</p>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Participants</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Prénom</th>
+                                            <th>Téléphone</th>  
+                                            <th>Statut</th>
+                                            <th>Action</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (participants == null || !participants.Any())
+                                        {
+                                            <tr>
+                                                <td colspan="3">Loading...</td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            @foreach (var participant in participants)
+                                            {
+                                                <tr>
+                                                    <td>@participant.nomParti</td>
+                                                    <td>@participant.prenomParti</td>
+                                                    <td>@participant.telephoneParti</td>
+                                                    <td>@(participant.statut ? "Actif" : "Inactif")</td>
+                                                    <td>
+                                                        <button class="btn btn-primary btn-sm" @onclick="(() => ToggleAccountStatus(participant))">
+                                                            @(participant.statut ? "Désactiver" : "Activer")
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+@code {
+    private List<Participant> participants = new List<Participant>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Load();
+    }
+    private async Task Load(){
+        try
+        {
+            participants = await DbContext.Participant.ToListAsync();
+            StateHasChanged(); 
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading participants: {ex.Message}");
+        }
+    }
+
+    private async Task ToggleAccountStatus(Participant participant){
+        try{
+            participant.statut = !participant.statut;
+            DbContext.Participant.Update(participant);
+            await DbContext.SaveChangesAsync();
+            await Load();
+        }catch( Exception ex){
+            Console.WriteLine($"Erreur dans l'update statut : {ex.Message}");
+        }
+    }
+   
+    
+
+}

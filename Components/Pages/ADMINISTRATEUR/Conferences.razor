@@ -1,0 +1,169 @@
+﻿@page "/conference"
+@namespace MEETING.Components.Pages.ADMINISTRATEUR
+@using Microsoft.EntityFrameworkCore
+@using MEETING.lesClasses
+@using Data
+@inject ApplicationDbContext DbContext
+@inject Microsoft.JSInterop.IJSRuntime JSRuntime
+
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+       <Sidebar />
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <Topbar />
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Conferences</h1>
+                    <p class="mb-4">Nombre des Conferences : @conferences.Count</p>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Conferences</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Theme</th>
+                                            <th>Sigle</th>
+                                            <th>DEBUT Soumission</th>
+                                            <th>FIN Soumission</th>
+                                            <th>DEBUT Resultat</th>
+                                            <th>FIN Resultat</th>
+                                            <th>DEBUT Inscription</th>
+                                            <th>FIN Inscription</th>
+                                            <th>DEBUT Conference</th>
+                                            <th>FIN Conference</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (conferences == null)
+                                        {
+                                            <tr>
+                                                <td colspan="3">Loading...</td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            @foreach (var conference in conferences)
+                                            {
+                                                <tr>
+                                                    <td>@conference.nomConf</td>
+                                                    <td>@conference.theme</td>
+                                                    <td>@conference.sigle</td>
+                                                    <td>@conference.debSoumission.ToString("yyyy-MM-dd")</td>
+                                                    <td>@conference.finSoumission.ToString("yyyy-MM-dd")</td>
+                                                    <td>@conference.debResultat.ToString("yyyy-MM-dd")</td>
+                                                    <td>@conference.finResultat.ToString("yyyy-MM-dd")</td>
+                                                    <td>@conference.debInscription.ToString("yyyy-MM-dd")</td>
+                                                    <td>@conference.finInscription.ToString("yyyy-MM-dd")</td>
+                                                    <td>@conference.debConference.ToString("yyyy-MM-dd")</td>
+                                                    <td>@conference.finConference.ToString("yyyy-MM-dd")</td>                                                    
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2020</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+@code {
+    private List<Conference> conferences = new List<Conference>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        conferences = await DbContext.Conference.ToListAsync();
+    }
+
+
+
+    /* private void AjouterConference()
+    {
+        
+    }
+    private void ModifierConference()
+    {
+        
+    }
+    private async Task SupprimerConference(Conference conference)
+    {
+        // Demandez une confirmation avant de supprimer
+        var confirmation = await JSRuntime.InvokeAsync<bool>("confirm", @"Êtes-vous sûr de vouloir supprimer cette conférence ?");
+
+
+        // Si l'utilisateur confirme la suppression
+        if (confirmation)
+        {
+            // Supprimez la conférence de la liste et de la base de données
+            conferences.Remove(conference);
+            DbContext.Conference.Remove(conference);
+            await DbContext.SaveChangesAsync();
+        }
+    }*/
+
+
+
+
+}

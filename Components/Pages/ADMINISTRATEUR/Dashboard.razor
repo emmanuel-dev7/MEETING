@@ -1,0 +1,25 @@
+﻿@page "/dashboard"
+@namespace MEETING.Components.Pages.ADMINISTRATEUR
+@using Microsoft.EntityFrameworkCore
+@using MEETING.lesClasses
+@using Data
+@inject ApplicationDbContext DbContext
+
+<div id="page-top">
+    <div id="wrapper">
+        <Sidebar />
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <Topbar />
+                <div class="container-fluid">
+                    <Home/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+}
