@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using MEETING.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
@@ -13,9 +14,9 @@ namespace MEETING.lesClasses
         [Required]
         public string passAdmin { get; set; }
 
-        private readonly greatManagerContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public Admin(greatManagerContext context)
+        public Admin(ApplicationDbContext context)
         {
             _context = context;
         }
